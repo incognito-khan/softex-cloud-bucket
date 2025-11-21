@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  accountType    AccountType
+  email          String         @unique
+  firstName      String
+  lastName       String
+  password       String
+  isActive       Boolean        @default(false)
+  isVerified     Boolean        @default(false)
+  avatar         String?
+  otp            String?
+  otpExpires     DateTime?
+
+  @@unique([email, accountType])
+  @@map("users")
+}
+
+enum AccountType {
+  ADMIN
+  KIDS
+  PERSONAL
+  TEAM
+}

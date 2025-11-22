@@ -188,8 +188,9 @@ export async function signUp(req, res) {
 export async function login(req, res) {
     try {
         const { email, password, accountType } = req.body;
-
+        
         const userAgent = req.headers["user-agent"] || "Unknown Device";
+        console.log(userAgent, 'userAgent')
 
         const ip =
             req.headers["x-forwarded-for"]?.split(",")[0] ||

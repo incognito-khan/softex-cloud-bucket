@@ -17,11 +17,32 @@ model User {
   isActive       Boolean        @default(false)
   isVerified     Boolean        @default(false)
   avatar         String?
-  otp            String?
-  otpExpires     DateTime?
+  userOTP        UserOTP[]
 
   @@unique([email, accountType])
   @@map("users")
+}
+
+model UserOTP {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  otp       String
+  type      OTPType  @default(SIGNUP) // SIGNUP or PASSWORD_RESET
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String      @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, type])
+  @@map("parent_otps")
+}
+
+enum OTPType {
+  SIGNUP
+  PASSWORD_RESET
 }
 
 enum AccountType {

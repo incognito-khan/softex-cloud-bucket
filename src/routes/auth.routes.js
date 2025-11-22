@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signUp, login, verifyOTP } from "../controllers/auth.controller.js";
+import { signUp, login, verifyOTP, forgotPassword, changePassword } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -20,5 +20,17 @@ router.post("/login", login);
  * @desc    Verify OTP through email and account type
  */
 router.post("/verifyOTP", verifyOTP);
+
+/**
+ * @route   POST /api/auth/forgotPassword
+ * @desc    Verify OTP through email and account type
+ */
+router.post("/forgotPassword", forgotPassword);
+
+/**
+ * @route   POST /api/auth/changePassword
+ * @desc    Verify OTP through email and account type
+ */
+router.post("/changePassword", changePassword);
 
 export default router;
